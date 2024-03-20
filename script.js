@@ -3,6 +3,7 @@ let btn = document.querySelectorAll(".btn");
 let clr = document.getElementById("clear");
 let equal = document.getElementById("equal");
 let clrA = document.getElementById("clear-all");
+let sqroot = document.getElementById("squareroot");
 
 var equal_sound = new Audio('assets/equal.mp3');
 var button_sound = new Audio('assets/button.mp3');
@@ -19,7 +20,7 @@ btn.forEach((bt) =>{
         console.log(output);
         display.innerText = output; 
         if(bt.innerText!="="){
-            button_sound.play();
+            // button_sound.play();
         }  
     }
 });
@@ -34,33 +35,62 @@ clrA.onclick = function() {
     display.innerText = output;
 };
 
+sqroot.onclick = function() {
+        compute();
+        output = String(Math.sqrt(parseFloat(output)));
+        // console.log(output);
+        display.innerText = output;
+}
 
-equal.onclick = function() {
+equal.onclick = compute;
+
+function compute() {
     let a=0;
     let b=0;
-    equal_sound.play();
+    // equal_sound.play();
     for(let i=0;i<output.length;i++){
-        if(output[i]=="+" || output[i]=="-" || output[i]=="×" || output[i]=="÷"){
+        
+        if(output[i]=="+" || output[i]=="-" || output[i]=="×" || output[i]=="÷" || output[i]=="√" || output[i]=="%"){
             opera = output[i];
-            a = parseFloat(output.slice(0,i));
-            b = parseFloat(output.slice(i+1,output.length));
-            console.log(a);
-            console.log(b);
+            
             if(opera=="+"){
+                a = parseFloat(output.slice(0,i));
+                b = parseFloat(output.slice(i+1,output.length));
                 output = String(add(a,b));
             }
             if(opera=="-"){
+                a = parseFloat(output.slice(0,i));
+                b = parseFloat(output.slice(i+1,output.length));
                 output = String(substract(a,b));
             }
             if(opera=="×"){
+                a = parseFloat(output.slice(0,i));
+                b = parseFloat(output.slice(i+1,output.length));
                 output = String(multiply(a,b));
             }
             if(opera=="÷"){
+                a = parseFloat(output.slice(0,i));
+                b = parseFloat(output.slice(i+1,output.length));
                 output = String(divide(a,b));
             }
-            display.innerText = output;
+            if(opera=="%"){
+                a = parseFloat(output.slice(0,i));
+                b = parseFloat(output.slice(i+1,output.length));
+                output = String(reminder(a,b));
+            }
+            // else{
+            //     if(opera=="√"){
+            //     a = parseFloat(output.slice(i+1,output.length));
+            //     output = String(Math.sqrt(a));
+            //     console.log(output);
+            //     // display.innerText = output;
+            // }
+            // }
+            
+            
         }
     }
+    display.innerText = output;
 }
 
 function manageInput() {
@@ -86,4 +116,7 @@ function multiply(a,b) {
 }
 function divide(a,b) {
     return a/b;
+}
+function reminder(a,b){
+    return a%b;
 }
