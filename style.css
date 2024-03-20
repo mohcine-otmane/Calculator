@@ -31,9 +31,9 @@ body {
 
 .buttons {
     display: grid;
-    grid-template-columns: auto auto auto;
-    background-color: #2196F3;
-    padding: 10px;
+    grid-template-columns: auto auto auto auto;
+    background-color: #536f86;
+    padding: 2px;
     border-radius: 0 0 5px 5px;
 }
 
@@ -48,8 +48,6 @@ body {
     margin-bottom: 2px;
     margin-right: 2px;
     padding: 5px;
-
-    
 }
 
 .btn:hover {
