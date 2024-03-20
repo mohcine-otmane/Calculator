@@ -1,9 +1,60 @@
 
+:root {
+    --button-color:rgb(218, 218, 218);
+    --button-color-hover:rgb(255, 255, 255);
+}
 
+body {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    background-image: url("https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg");
+    backdrop-filter: blur(5px);
+    margin: 0;
+}
 
+.calculator {
+    margin-top: 50px;
+}
+
+.display {
+    backdrop-filter: blur(5px);
+    border-radius: 5px 5px 0 0;
+    background-color: #011a2e;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: #fff;
+    padding: 5px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: #2196F3;
+    padding: 10px;
+    border-radius: 0 0 5px 5px;
+}
 
 .btn {
-    width: 40px;
+    width: 30px;
     height: 20px;
+    background-color: var(--button-color);
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px 0px hsla(0, 67%, 4%, 0.445);
+    text-align: center;
+    transition: scale .25s ease-out;
+    margin-bottom: 2px;
+    margin-right: 2px;
+    padding: 5px;
+
     
+}
+
+.btn:hover {
+    background-color: var(--button-color-hover);
+    cursor: pointer;
+    scale: 1.05;
+    transition: scale .25s ease-in;
 }
