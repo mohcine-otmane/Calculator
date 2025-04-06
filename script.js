@@ -8,20 +8,18 @@ let sqroot = document.getElementById("squareroot");
 var equal_sound = new Audio('assets/equal.mp3');
 var button_sound = new Audio('assets/button.mp3');
 
-
-
-
 let output = "";
 let opera = "";
+const MAX_DIGITS = 14;
 
 btn.forEach((bt) =>{
     bt.onclick = function() {
+        // Don't add more digits if max length reached
+        if (output.replace(/[^0-9]/g, "").length >= MAX_DIGITS && !isOperator(bt.innerText)) {
+            return;
+        }
         output += String(bt.innerText);
-        console.log(output);
-        display.innerText = output; 
-        if(bt.innerText!="="){
-            // button_sound.play();
-        }  
+        display.innerText = formatNumber(output);
     }
 });
 
@@ -38,7 +36,6 @@ clrA.onclick = function() {
 sqroot.onclick = function() {
         compute();
         output = String(Math.sqrt(parseFloat(output)));
-        // console.log(output);
         display.innerText = output;
 }
 
@@ -47,7 +44,6 @@ equal.onclick = compute;
 function compute() {
     let a=0;
     let b=0;
-    // equal_sound.play();
     for(let i=0;i<output.length;i++){
         
         if(output[i]=="+" || output[i]=="-" || output[i]=="×" || output[i]=="÷" || output[i]=="√" || output[i]=="%"){
@@ -78,23 +74,34 @@ function compute() {
                 b = parseFloat(output.slice(i+1,output.length));
                 output = String(reminder(a,b));
             }
-            // else{
-            //     if(opera=="√"){
-            //     a = parseFloat(output.slice(i+1,output.length));
-            //     output = String(Math.sqrt(a));
-            //     console.log(output);
-            //     // display.innerText = output;
-            // }
-            // }
-            
-            
         }
     }
-    display.innerText = output;
+    
+    // Format the final result
+    if (output.includes('.')) {
+        // Handle decimal numbers
+        output = String(parseFloat(output).toFixed(10).replace(/\.?0+$/, ''));
+    }
+    // Limit integer length
+    if (output.length > MAX_DIGITS) {
+        output = Number(output).toExponential(9);
+    }
+    display.innerText = formatNumber(output);
 }
 
-function manageInput() {
+function formatNumber(num) {
+    if (num === '') return '';
+    // Format numbers but keep operators intact
+    return num.replace(/\d+\.?\d*/g, match => {
+        if (match.includes('.')) {
+            return parseFloat(match).toString();
+        }
+        return parseInt(match).toLocaleString('en-US');
+    });
+}
 
+function isOperator(char) {
+    return ['+', '-', '×', '÷', '%', '√', '='].includes(char);
 }
 
 function clear(output) {
